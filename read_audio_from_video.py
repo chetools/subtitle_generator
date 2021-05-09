@@ -11,13 +11,15 @@ from bidict import bidict
 import string
 from glob import glob
 
-# text = """Dante has officially infiltrated Hypixel. You probably want to stick around to the end because it gets crazy.
-# Yesterday at around 9:20 pm eastern time, I was in a call with my coop member Vudge when he stumbled upon a Dante goon in the main Hypixel hub. I instantly went and followed him but the Dante goon didn’t appear for me, so he recorded the following footage for me:
-# He says he isn’t jebaiting me, but I have a feeling that he is, leave a comment letting me know if you see the goon. Subscribe and leave a like because I will be giving away another 100 million coins if we hit 10,000 subscribers but by the way"""
+text = """My name is PoisonRain and I promised to giveaway 0.05% of a heart. That was only partly a joke.
 
-# text = text.translate(text.maketrans(string.punctuation, " " * len(string.punctuation)))
-# text = text.lower()
-# text = text.split()
+All the way back when I hit 5000 subscribers, I promised to giveaway 100 million skyblock coins. So I decided that after 20 videos, 20 lucky winners who are subscribed, liked and commented on a video will get 5m coins each. 
+
+Now this is the time where I plug the giveaway soo
+"""
+text = text.translate(text.maketrans(string.punctuation, " " * len(string.punctuation)))
+text = text.lower()
+text = text.split()
 
 DEVNULL = open(os.devnull, "w")
 
@@ -79,56 +81,110 @@ def ffmpeg_load_audio(
             audio /= np.iinfo(in_type).max
     return audio, sr
 
+def to_text():
+    audio, sr = ffmpeg_load_audio(
+        "test.mp4", sr=16000, in_type=np.float32, out_type=np.float32
+    )
+    audio = np.expand_dims(audio.astype(np.float32)[0], 0)
 
-audio, sr = ffmpeg_load_audio(
-    "pig.mp4", sr=16000, in_type=np.float32, out_type=np.float32
-)
+
+    device = torch.device("cpu")
+    model, decoder, utils = torch.hub.load(
+        repo_or_dir="snakers4/silero-models",
+        model="silero_stt",
+        language="en",  # also available 'de', 'es'
+        device=device,
+    )
+    # audio, sr = sf.read("pig.wav")
+    # audio = np.expand_dims(audio.astype(np.float32)[:,0], 0)
+    print(f'{audio.shape=}')
+
+    res = []
+    batch_size = 5 * sr
+    N = audio.size // batch_size
+
+    sections = np.array_split(audio, N, 1)
+
+    for i, section in enumerate(sections):
+        input=torch.from_numpy(section)
+        print(f'{input.shape=} {input.dtype=}')
+        output = model(input)[0]
+        s, dlist = decoder(output.cpu(), section.size, word_align=True)
+        print(s)
+        for d in dlist:
+            d["start_ts"] = (d["start_ts"] + i * batch_size) / sr
+            d["end_ts"] = (d["end_ts"] + i * batch_size) / sr
+            print(d["word"], d["start_ts"], d["end_ts"])
+            res.append(d)
 
 
-device = torch.device("cpu")
-model, decoder, utils = torch.hub.load(
-    repo_or_dir="snakers4/silero-models",
-    model="silero_stt",
-    language="en",  # also available 'de', 'es'
-    device=device,
-)
-# audio, sr = sf.read("pig.wav")
-audio = np.expand_dims(audio.astype(np.float32)[0], 0)
-res = []
-batch_size = 5 * sr
-N = audio.size // batch_size
+    df = pd.DataFrame(res)
+    df.to_csv("result.csv")
 
-sections = np.array_split(audio, N, 1)
-for i, section in enumerate(sections):
-    output = model(torch.from_numpy(section))[0]
-    print(output.shape)
-    s, dlist = decoder(output.cpu(), section.size, word_align=True)
-    print(s)
-    for d in dlist:
-        d["start_ts"] = (d["start_ts"] + i * batch_size) / sr
-        d["end_ts"] = (d["end_ts"] + i * batch_size) / sr
-        print(d["word"], d["start_ts"], d["end_ts"])
+    voice_words = df["word"].values
+    print(" ".join(voice_words))
+
+def align():
+    df = pd.read_csv("result.csv")
+    voice_words = df["word"].values
+    start_times = df["start_ts"].values
+    end_times = df["end_ts"].values
+
+    all_words = set(text).union(set(voice_words))
+
+    word_dict = bidict(zip(all_words, range(len(all_words))))
+    word_dict["-"] = "-"
+    voice = [word_dict[word] for word in voice_words]
+    script = [word_dict[word] for word in text]
+    align = pairwise2.align.globalxx(voice, script, gap_char =['-'], one_alignment_only=True)[0]
+    matches=[]
+    mismatches=[]
+    mismatch_voice=word_dict.inverse[align.seqA[0]]   
+    mismatch_text=word_dict.inverse[align.seqB[0]]
+    v_end_pos=0
+    v_start_pos=0
+    t_end_pos=0
+    t_start_pos=0
+    for i,(v, t) in enumerate(zip(align.seqA[1:], align.seqB[1:])):
+        if v==t:
+            mismatches.append([t_start_pos, t_end_pos, start_times[v_start_pos], end_times[v_end_pos], mismatch_voice, mismatch_text])
+            v_end_pos+=1
+            v_start_pos=v_end_pos
+            t_end_pos+=1
+            t_start_pos=t_end_pos
+            mismatch_voice=word_dict.inverse[v]
+            mismatch_text=word_dict.inverse[t]
+        else:
+            if word_dict.inverse[v] != '-' :
+                v_end_pos+=1
+            if word_dict.inverse[t] != '-' :
+                t_end_pos+=1
+            mismatch_voice+=' ' + word_dict.inverse[v]
+            mismatch_text+=' ' + word_dict.inverse[t]
+    mismatches.append([t_start_pos, t_end_pos, start_times[v_start_pos], end_times[v_end_pos], mismatch_voice, mismatch_text])
+
+    res=[]
+    for t_start_pos, t_end_pos, start_time, end_time, v, t in mismatches:
+        print('-'*30)
+        print(v)
+        print(t)
+        print(t_start_pos,t_end_pos, start_time, end_time)
+        d={}
+
+        t2 = t.translate(t.maketrans(string.punctuation, " " * len(string.punctuation)))
+        t2 = " ".join(t2.split())
+
+        d['idx']=t_start_pos
+        d['time']=start_time
+        d['words']=t2
         res.append(d)
+    d={}
+    d['idx']=t_end_pos
+    d['time']=end_time
+    res.append(d)
+    df=pd.DataFrame(res)
+    df.to_csv("word_times.csv")
+    
 
-
-df = pd.DataFrame(res)
-df.to_csv("result.csv")
-
-voice_words = df["word"].values
-print(" ".join(voice_words))
-
-# df = pd.read_csv("result.csv")
-# voice_words = df["word"].values
-
-# print(" ".join(voice_words))
-
-# all_words = set(text).union(set(voice_words))
-
-# word_dict = bidict(zip(all_words, range(len(all_words))))
-# word_dict["-"] = "-"
-# voice = [word_dict[word] for word in voice_words]
-# script = [word_dict[word] for word in text]
-# alignments = pairwise2.align.globalxx(voice, script, gap_char=["-"])
-# for a in alignments:
-#     for v, s in zip(a.seqA, a.seqB):
-#         print(word_dict.inverse[v], word_dict.inverse[s])
+# to_text()
+align()
