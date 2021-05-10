@@ -14,9 +14,7 @@ import re
 
 
 
-text = """we are back again with even a crazier mod!
-
-This time, we installed the Wave shaders into Hypixel Skyblock and it was interesting to say the least. You want to stick to the end of this video.
+text = """we installed the Wave shaders into Hypixel Skyblock and it was interesting to say the least. You want to stick to the end of this video.
 
 So, I just installed the shader pack and it’s time to log into Hypixel.
 
@@ -109,7 +107,7 @@ def to_text():
     N = audio.size // batch_size
 
     sections = np.array_split(audio, N, 1)
-
+    section_start=0
     for i, section in enumerate(sections):
         input=torch.from_numpy(section)
         print(f'{input.shape=} {input.dtype=}')
@@ -117,10 +115,11 @@ def to_text():
         s, dlist = decoder(output.cpu(), section.size, word_align=True)
         print(s)
         for d in dlist:
-            d["start_ts"] = (d["start_ts"] + i * batch_size) / sr
-            d["end_ts"] = (d["end_ts"] + i * batch_size) / sr
+            d["start_ts"] = (d["start_ts"] + section_start) / sr
+            d["end_ts"] = (d["end_ts"] +  section_start) / sr
             print(d["word"], d["start_ts"], d["end_ts"])
             res.append(d)
+        section_start+=section.size
 
 
     df = pd.DataFrame(res)
@@ -186,7 +185,7 @@ def align():
         idx.append(t_start_pos)
         times.append(start_time)
 
-    idx.append(t_end_pos)
+    idx.append(t_end_pos+1)
     times.append(end_time)
 
     np.savez('it',idx=np.array(idx),time=np.array(times))
