@@ -10,6 +10,9 @@ from Bio.pairwise2 import format_alignment
 from bidict import bidict
 import string
 from glob import glob
+import re
+
+
 
 text = """My name is PoisonRain and I promised to giveaway 0.05% of a heart. That was only partly a joke.
 
@@ -17,7 +20,7 @@ All the way back when I hit 5000 subscribers, I promised to giveaway 100 million
 
 Now this is the time where I plug the giveaway soo
 """
-text = text.translate(text.maketrans(string.punctuation, " " * len(string.punctuation)))
+text = re.sub(r"[,.!?] ", " ", text, 0, re.MULTILINE)
 text = text.lower()
 text = text.split()
 
@@ -163,7 +166,8 @@ def align():
             mismatch_text+=' ' + word_dict.inverse[t]
     mismatches.append([t_start_pos, t_end_pos, start_times[v_start_pos], end_times[v_end_pos], mismatch_voice, mismatch_text])
 
-    res=[]
+    idx=[]
+    times=[]
     for t_start_pos, t_end_pos, start_time, end_time, v, t in mismatches:
         print('-'*30)
         print(v)
@@ -174,17 +178,17 @@ def align():
         t2 = t.translate(t.maketrans(string.punctuation, " " * len(string.punctuation)))
         t2 = " ".join(t2.split())
 
-        d['idx']=t_start_pos
-        d['time']=start_time
-        d['words']=t2
-        res.append(d)
-    d={}
-    d['idx']=t_end_pos
-    d['time']=end_time
-    res.append(d)
-    df=pd.DataFrame(res)
-    df.to_csv("word_times.csv")
-    
+        idx.append(t_start_pos)
+        times.append(start_time)
+
+    idx.append(t_end_pos)
+    times.append(end_time)
+
+    np.savez('it',idx=np.array(idx),time=np.array(times))
+    it = np.load('it.npz')
+    print(it['idx'])
+    print(it['time'])
 
 # to_text()
 align()
+
