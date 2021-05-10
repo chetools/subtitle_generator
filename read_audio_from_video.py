@@ -14,11 +14,13 @@ import re
 
 
 
-text = """My name is PoisonRain and I promised to giveaway 0.05% of a heart. That was only partly a joke.
+text = """we are back again with even a crazier mod!
 
-All the way back when I hit 5000 subscribers, I promised to giveaway 100 million skyblock coins. So I decided that after 20 videos, 20 lucky winners who are subscribed, liked and commented on a video will get 5m coins each. 
+This time, we installed the Wave shaders into Hypixel Skyblock and it was interesting to say the least. You want to stick to the end of this video.
 
-Now this is the time where I plug the giveaway soo
+So, I just installed the shader pack and it’s time to log into Hypixel.
+
+As you can see, things are only slightly different, but it’s like everything is the ocean with the rolling waves. If you want to try out the shader pack for yourself, I put a link to the download, in the comments!
 """
 text = re.sub(r"[,.!?] ", " ", text, 0, re.MULTILINE)
 text = text.lower()
@@ -86,7 +88,7 @@ def ffmpeg_load_audio(
 
 def to_text():
     audio, sr = ffmpeg_load_audio(
-        "test.mp4", sr=16000, in_type=np.float32, out_type=np.float32
+        "D:\Blender\WaveShadersNoSubtitles.mov", sr=16000, in_type=np.float32, out_type=np.float32
     )
     audio = np.expand_dims(audio.astype(np.float32)[0], 0)
 
@@ -103,7 +105,7 @@ def to_text():
     print(f'{audio.shape=}')
 
     res = []
-    batch_size = 5 * sr
+    batch_size = 3 * sr
     N = audio.size // batch_size
 
     sections = np.array_split(audio, N, 1)
@@ -149,6 +151,7 @@ def align():
     t_end_pos=0
     t_start_pos=0
     for i,(v, t) in enumerate(zip(align.seqA[1:], align.seqB[1:])):
+        print(word_dict.inverse[v], word_dict.inverse[t])
         if v==t:
             mismatches.append([t_start_pos, t_end_pos, start_times[v_start_pos], end_times[v_end_pos], mismatch_voice, mismatch_text])
             v_end_pos+=1
@@ -164,6 +167,8 @@ def align():
                 t_end_pos+=1
             mismatch_voice+=' ' + word_dict.inverse[v]
             mismatch_text+=' ' + word_dict.inverse[t]
+
+
     mismatches.append([t_start_pos, t_end_pos, start_times[v_start_pos], end_times[v_end_pos], mismatch_voice, mismatch_text])
 
     idx=[]
