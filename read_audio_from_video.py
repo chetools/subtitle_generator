@@ -11,6 +11,7 @@ from bidict import bidict
 import string
 from glob import glob
 import re
+import shutil
 
 
 
@@ -84,9 +85,9 @@ def ffmpeg_load_audio(
             audio /= np.iinfo(in_type).max
     return audio, sr
 
-def to_text():
+def to_text(f):
     audio, sr = ffmpeg_load_audio(
-        "D:\Blender\WaveShadersNoSubtitles.mov", sr=16000, in_type=np.float32, out_type=np.float32
+        f, sr=16000, in_type=np.float32, out_type=np.float32
     )
     audio = np.expand_dims(audio.astype(np.float32)[0], 0)
 
@@ -123,13 +124,13 @@ def to_text():
 
 
     df = pd.DataFrame(res)
-    df.to_csv("result.csv")
+    df.to_csv("voice_times.csv")
 
     voice_words = df["word"].values
     print(" ".join(voice_words))
 
 def align():
-    df = pd.read_csv("result.csv")
+    df = pd.read_csv("voice_times.csv")
     voice_words = df["word"].values
     start_times = df["start_ts"].values
     end_times = df["end_ts"].values
@@ -193,6 +194,35 @@ def align():
     print(it['idx'])
     print(it['time'])
 
-# to_text()
-align()
+def make_copies():
+    it = np.load('d:\Github\subtitle_generator\it.npz')
+    idx=it['idx']
+    times=it['time']
 
+    path_out='D:\\Blender\\BlenderVideo\\'
+    path_in='D:\\Blender\\BlenderOut\\'
+
+    i=0
+    subtitle_images = glob(path_in+'*.png')
+    print(subtitle_images)
+    for subtitle_image in subtitle_images:
+        name, subtitle_n, w_start, w_end = subtitle_image.split('_')
+        *_, name = name.split('\\')
+        w_end,_ = w_end.split('.')
+        w_start, w_end, subtitle_n =int(w_start), int(w_end), int(subtitle_n)
+        t_start, t_end = np.interp([w_start, w_end], idx, times)
+        f_start, f_end = int(t_start*10), int(t_end*10)
+        print(name, w_start, w_end, f_start, f_end)
+        for copy_n in range(f_end-f_start):
+            # file_out = f'{name}_{subtitle_n:04d}_{copy_n:05d}.png'
+            # file_out = f'{name}{i:04d}.png'
+            # print(file_out)
+            name=f'{i:04d}'.translate(str.maketrans('0123456789','abcdefghij'))
+            shutil.copyfile(subtitle_image, path_out+name+'.png')
+            i+=1
+
+
+
+# to_text("D:\Blender\WaveShadersNoSubtitles.mov")
+# align()
+make_copies()
