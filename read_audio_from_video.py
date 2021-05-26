@@ -15,12 +15,7 @@ import shutil
 
 
 
-text = """we installed the Wave shaders into Hypixel Skyblock and it was interesting to say the least. You want to stick to the end of this video.
-
-So, I just installed the shader pack and it’s time to log into Hypixel.
-
-As you can see, things are only slightly different, but it’s like everything is the ocean with the rolling waves. If you want to try out the shader pack for yourself, I put a link to the download, in the comments!
-"""
+text = """i need to get down there how do i get down there do i just do this yeah professional some people call me like the best minecrafter out there for a reason yeahhh exactly"""
 text = re.sub(r"[,.!?] ", " ", text, 0, re.MULTILINE)
 text = text.lower()
 text = text.split()
@@ -113,14 +108,16 @@ def to_text(f):
         input=torch.from_numpy(section)
         print(f'{input.shape=} {input.dtype=}')
         output = model(input)[0]
-        s, dlist = decoder(output.cpu(), section.size, word_align=True)
-        print(s)
-        for d in dlist:
-            d["start_ts"] = (d["start_ts"] + section_start) / sr
-            d["end_ts"] = (d["end_ts"] +  section_start) / sr
-            print(d["word"], d["start_ts"], d["end_ts"])
-            res.append(d)
-        section_start+=section.size
+        print(f'{output.shape=} {output.dtype=}')
+        decoded=decoder(output.cpu(), section.size, word_align=True)
+        if len(decoded)==2:
+            s,dlist = decoded
+            for d in dlist:
+                d["start_ts"] = (d["start_ts"] + section_start) / sr
+                d["end_ts"] = (d["end_ts"] +  section_start) / sr
+                print(d["word"], d["start_ts"], d["end_ts"])
+                res.append(d)
+            section_start+=section.size
 
 
     df = pd.DataFrame(res)
@@ -199,8 +196,8 @@ def make_copies():
     idx=it['idx']
     times=it['time']
 
-    path_out='D:\\Blender\\BlenderVideo\\'
-    path_in='D:\\Blender\\BlenderOut\\'
+    path_out='E:\\Blender\\BlenderVideo\\'
+    path_in='E:\\Blender\\BlenderOut\\'
 
     i=0
     subtitle_images = glob(path_in+'*.png')
@@ -223,6 +220,6 @@ def make_copies():
 
 
 
-# to_text("D:\Blender\WaveShadersNoSubtitles.mov")
+# to_text("E:\Blender\death.mov")
 # align()
 make_copies()
