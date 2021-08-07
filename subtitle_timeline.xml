@@ -231,26 +231,26 @@
                             </effect>
                         </filter>
                     </clipitem>
-                    <clipitem id="a_0001_0003_0008.png 0">
-                        <name>a_0001_0003_0008.png</name>
+                    <clipitem id="a_0002_0008_0011.png 0">
+                        <name>a_0002_0008_0011.png</name>
                         <duration>3600001</duration>
                         <rate>
                             <timebase>60</timebase>
                             <ntsc>FALSE</ntsc>
                         </rate>
-                        <start>85</start>
-                        <end>174</end>
+                        <start>174</start>
+                        <end>249</end>
                         <enabled>TRUE</enabled>
                         <in>216000</in>
                         <out>216006</out>
-                        <file id="a_0001_0003_0008.png 2">
+                        <file id="a_0002_0008_0011.png 2">
                             <duration>1</duration>
                             <rate>
                                 <timebase>60</timebase>
                                 <ntsc>FALSE</ntsc>
                             </rate>
-                            <name>a_0001_0003_0008.png</name>
-                            <pathurl>file://localhost/E:/Blender/BlenderOut/a_0001_0003_0008.png</pathurl>
+                            <name>a_0002_0008_0011.png</name>
+                            <pathurl>file://localhost/E:/Blender/BlenderOut/a_0002_0008_0011.png</pathurl>
                             <timecode>
                                 <string>00:00:00:00</string>
                                 <displayformat>NDF</displayformat>
@@ -441,26 +441,26 @@
                             </effect>
                         </filter>
                     </clipitem>
-                    <clipitem id="a_0002_0008_0011.png 0">
-                        <name>a_0002_0008_0011.png</name>
+                    <clipitem id="a_0001_0003_0008.png 0">
+                        <name>a_0001_0003_0008.png</name>
                         <duration>3600001</duration>
                         <rate>
                             <timebase>60</timebase>
                             <ntsc>FALSE</ntsc>
                         </rate>
-                        <start>174</start>
-                        <end>249</end>
+                        <start>85</start>
+                        <end>174</end>
                         <enabled>TRUE</enabled>
                         <in>216000</in>
                         <out>216006</out>
-                        <file id="a_0002_0008_0011.png 2">
+                        <file id="a_0001_0003_0008.png 2">
                             <duration>1</duration>
                             <rate>
                                 <timebase>60</timebase>
                                 <ntsc>FALSE</ntsc>
                             </rate>
-                            <name>a_0002_0008_0011.png</name>
-                            <pathurl>file://localhost/E:/Blender/BlenderOut/a_0002_0008_0011.png</pathurl>
+                            <name>a_0001_0003_0008.png</name>
+                            <pathurl>file://localhost/E:/Blender/BlenderOut/a_0001_0003_0008.png</pathurl>
                             <timecode>
                                 <string>00:00:00:00</string>
                                 <displayformat>NDF</displayformat>
