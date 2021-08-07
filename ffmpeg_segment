@@ -1,3 +1,0 @@
-#/bin/bash
-
-ffmpeg -y -i pig.wav -ac 2 -f segment -segment_time 5  ./split/pig_split%03d.wav

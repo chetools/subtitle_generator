@@ -15,11 +15,34 @@ import shutil
 
 
 
-text = """i need to get down there how do i get down there do i just do this yeah professional some people call me like the best minecrafter out there for a reason yeahhh exactly"""
-text = re.sub(r"[,.!?] ", " ", text, 0, re.MULTILINE)
+text = """after the questionable
+events of the last part
+where Spadeless lost
+his pets...
+and then his house
+he wanted my
+teammate Vudge dead
+which happened
+i then found out that he
+murdered Vudge for
+totally no reason
+with his friends AgentMac
+and Hilton
+i didn't even have time
+for a proper funeral
+so i then just murdered them
+IN MINECRAFT
+and i also mean tried since
+these little pesky
+combat loggers
+just didn't give me a break
+i then gave up and was
+told by Wolfurian to go
+to the nether to a secret
+base"""
+text = re.sub(r"[,.!?-] ", " ", text, 0, re.MULTILINE)
 text = text.lower()
 text = text.split()
-
 DEVNULL = open(os.devnull, "w")
 
 
@@ -81,6 +104,7 @@ def ffmpeg_load_audio(
     return audio, sr
 
 def to_text(f):
+    print(f)
     audio, sr = ffmpeg_load_audio(
         f, sr=16000, in_type=np.float32, out_type=np.float32
     )
@@ -188,14 +212,14 @@ def align():
 
     np.savez('it',idx=np.array(idx),time=np.array(times))
     it = np.load('it.npz')
-    print(it['idx'])
-    print(it['time'])
+    print(it['idx'], len(it['idx']))
+    print(it['time'], len(it['time']))
 
 def make_copies():
     it = np.load('d:\Github\subtitle_generator\it.npz')
     idx=it['idx']
     times=it['time']
-
+    print(times, len(times))
     path_out='E:\\Blender\\BlenderVideo\\'
     path_in='E:\\Blender\\BlenderOut\\'
 
@@ -207,6 +231,8 @@ def make_copies():
         *_, name = name.split('\\')
         w_end,_ = w_end.split('.')
         w_start, w_end, subtitle_n =int(w_start), int(w_end), int(subtitle_n)
+        w_start+=1
+        w_end+=1
         t_start, t_end = np.interp([w_start, w_end], idx, times)
         f_start, f_end = int(t_start*10), int(t_end*10)
         print(name, w_start, w_end, f_start, f_end)
@@ -214,12 +240,13 @@ def make_copies():
             # file_out = f'{name}_{subtitle_n:04d}_{copy_n:05d}.png'
             # file_out = f'{name}{i:04d}.png'
             # print(file_out)
+            
             name=f'{i:04d}'.translate(str.maketrans('0123456789','abcdefghij'))
             shutil.copyfile(subtitle_image, path_out+name+'.png')
             i+=1
 
 
 
-# to_text("E:\Blender\death.mov")
+# to_text("E:\\Blender\\audio.mp4")
 # align()
 make_copies()

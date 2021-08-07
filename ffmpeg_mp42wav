@@ -1,3 +1,0 @@
-#/bin/bash
-
-ffmpeg -y -i pig.mp4 -vn -ar 16000 -ac 2 -f wav pig.wav

@@ -14,7 +14,14 @@ stt_models:
       onnx_large: "https://models.silero.ai/models/en/en_v3_large.onnx"
       jit_xsmall: "https://models.silero.ai/models/en/en_v3_jit_xsmall.model"
       jit_q_xsmall: "https://models.silero.ai/models/en/en_v3_jit_q_xsmall.model"
-      onnx_xsmall: "https://models.silero.ai/models/en/en_v3_xsmall.onnx"      
+      onnx_xsmall: "https://models.silero.ai/models/en/en_v3_xsmall.onnx"
+    v4_0:
+      meta:
+        name: "en_v4_0"
+        sample: "https://models.silero.ai/examples/en_sample.wav"
+      labels: "https://models.silero.ai/models/en/en_v1_labels.json"
+      jit_large: "https://models.silero.ai/models/en/en_v4_0_jit_large.model"
+      onnx_large: "https://models.silero.ai/models/en/en_v4_0_large.onnx"
     v3:
       meta:
         name: "en_v3"
@@ -98,6 +105,11 @@ stt_models:
       jit_q: "https://models.silero.ai/models/ua/ua_v1_jit_q.model"
 tts_models:
   ru:
+    aidar_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_aidar.pt'
+        sample_rate: [8000, 16000]
     aidar_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -120,6 +132,11 @@ tts_models:
         example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
         jit: 'https://models.silero.ai/models/tts/ru/v1_aidar_16000.jit'
         sample_rate: 16000
+    baya_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_baya.pt'
+        sample_rate: [8000, 16000] 
     baya_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -142,6 +159,11 @@ tts_models:
         example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
         jit: 'https://models.silero.ai/models/tts/ru/v1_baya_16000.jit'
         sample_rate: 16000
+    irina_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_irina.pt'
+        sample_rate: [8000, 16000] 
     irina_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -164,6 +186,11 @@ tts_models:
         example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
         jit: 'https://models.silero.ai/models/tts/ru/v1_irina_16000.jit'
         sample_rate: 16000
+    kseniya_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_kseniya.pt'
+        sample_rate: [8000, 16000]
     kseniya_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -186,6 +213,11 @@ tts_models:
         example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
         jit: 'https://models.silero.ai/models/tts/ru/v1_kseniya_16000.jit'
         sample_rate: 16000
+    natasha_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_natasha.pt'
+        sample_rate: [8000, 16000]
     natasha_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -208,6 +240,11 @@ tts_models:
         example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
         jit: 'https://models.silero.ai/models/tts/ru/v1_natasha_16000.jit'
         sample_rate: 16000
+    ruslan_v2:
+      latest:
+        example: 'В н+едрах т+ундры в+ыдры в г+етрах т+ырят в в+ёдра +ядра к+едров.'
+        package: 'https://models.silero.ai/models/tts/ru/v2_ruslan.pt'
+        sample_rate: [8000, 16000]
     ruslan_8khz:
       latest:
         tokenset: '_~абвгдеёжзийклмнопрстуфхцчшщъыьэюя +.,!?…:;–'
@@ -231,6 +268,11 @@ tts_models:
         jit: 'https://models.silero.ai/models/tts/ru/v1_ruslan_16000.jit'
         sample_rate: 16000
   en:
+    lj_v2:
+      latest:
+        example: 'Can you can a canned can into an un-canned can like a canner can can a canned can into an un-canned can?'
+        package: 'https://models.silero.ai/models/tts/en/v2_lj.pt'
+        sample_rate: [8000, 16000]
     lj_8khz:
       latest:
         tokenset: '_~abcdefghijklmnopqrstuvwxyz .,!?…:;–'
@@ -254,6 +296,11 @@ tts_models:
         jit: 'https://models.silero.ai/models/tts/en/v1_lj_16000.jit'
         sample_rate: 16000
   de:
+    thorsten_v2:
+      latest:
+        example: 'Fischers Fritze fischt frische Fische, Frische Fische fischt Fischers Fritze.'
+        package: 'https://models.silero.ai/models/tts/de/v2_thorsten.pt'
+        sample_rate: [8000, 16000]
     thorsten_8khz:
       latest:
         tokenset: '_~abcdefghijklmnopqrstuvwxyzäöüß .,!?…:;–'
@@ -277,6 +324,11 @@ tts_models:
         jit: 'https://models.silero.ai/models/tts/de/v1_thorsten_16000.jit'
         sample_rate: 16000
   es:
+    tux_v2:
+      latest:
+        example: 'Hoy ya es ayer y ayer ya es hoy, ya llegó el día, y hoy es hoy.'
+        package: 'https://models.silero.ai/models/tts/es/v2_tux.pt'
+        sample_rate: [8000, 16000]
     tux_8khz:
       latest:
         tokenset: '_~abcdefghijklmnopqrstuvwxyzáéíñóú .,!?…:;–¡¿'
@@ -300,6 +352,11 @@ tts_models:
         jit: 'https://models.silero.ai/models/tts/es/v1_tux_16000.jit'
         sample_rate: 16000
   fr:
+    gilles_v2:
+      latest:
+        example: 'Je suis ce que je suis, et si je suis ce que je suis, qu’est ce que je suis.'
+        package: 'https://models.silero.ai/models/tts/fr/v2_gilles.pt'
+        sample_rate: [8000, 16000]
     gilles_8khz:
       latest:
         tokenset: '_~abcdefghijklmnopqrstuvwxyzéàèùâêîôûç .,!?…:;–'
@@ -322,3 +379,70 @@ tts_models:
         example: 'Je suis ce que je suis, et si je suis ce que je suis, qu’est ce que je suis.'
         jit: 'https://models.silero.ai/models/tts/fr/v1_gilles_16000.jit'
         sample_rate: 16000
+  ba:
+    aigul_v2:
+      latest:
+        example: 'Салауат Юлаевтың тормошо һәм яҙмышы хаҡындағы документтарҙың һәм шиғри әҫәрҙәренең бик аҙ өлөшө генә һаҡланған.'
+        package: 'https://models.silero.ai/models/tts/ba/v2_aigul.pt'
+        sample_rate: [8000, 16000]
+        language_name: 'bashkir'
+  xal:
+    erdni_v2:
+      latest:
+        example: 'Һорвн, дөрвн күн ирәд, һазань чиңгнв. Байн Цецн хаана һорвн көвүн күүндҗәнә.'
+        package: 'https://models.silero.ai/models/tts/xal/v2_erdni.pt'
+        sample_rate: [8000, 16000]
+        language_name: 'kalmyk'
+  tt:
+    dilyara_v2:
+      latest:
+        example: 'Ис+әнмесез, с+аумысез, нишл+әп кәҗәгезн+е с+аумыйсыз, әтәчег+ез күк+әй салг+ан, нишл+әп чыг+ып +алмыйсыз.'
+        package: 'https://models.silero.ai/models/tts/tt/v2_dilyara.pt'
+        sample_rate: [8000, 16000]
+        language_name: 'tatar'
+  uz:
+    dilnavoz_v2:
+      latest:
+        example: 'Tanishganimdan xursandman.'
+        package: 'https://models.silero.ai/models/tts/uz/v2_dilnavoz.pt'
+        sample_rate: [8000, 16000]
+        language_name: 'uzbek'
+  multi:
+    multi_v2:
+      latest:
+        package: 'https://models.silero.ai/models/tts/multi/v2_multi.pt'
+        sample_rate: [8000, 16000]
+        speakers: 
+          aidar:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          baya:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          kseniya:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          irina:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          ruslan:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          natasha:
+            lang: 'ru'
+            example: 'Съ+ешьте ещ+ё +этих м+ягких франц+узских б+улочек, д+а в+ыпейте ч+аю.'
+          thorsten:
+            lang: 'de'
+            example: 'Fischers Fritze fischt frische Fische, Frische Fische fischt Fischers Fritze.'
+          tux:
+            lang: 'es'
+            example: 'Hoy ya es ayer y ayer ya es hoy, ya llegó el día, y hoy es hoy.'
+          gilles:
+            lang: 'fr'
+            example: 'Je suis ce que je suis, et si je suis ce que je suis, qu’est ce que je suis.'
+          lj:
+            lang: 'en'
+            example: 'Can you can a canned can into an un-canned can like a canner can can a canned can into an un-canned can?'
+          dilyara:
+            lang: 'tt'
+            example: 'Пес+и пес+и песик+әй, борыннар+ы бәләк+әй.'

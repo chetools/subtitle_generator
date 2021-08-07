@@ -1,3 +1,0 @@
-#/bin/bash
-
-ffmpeg -y -i blank1080_1920.png -filter_complex "[0:v]drawtext=fontfile=Dosis-Bold.ttf:fontsize=50:fontcolor=white:bordercolor=black:borderw=20:x=(w-text_w)/2:y=(h-text_h)/2:text='Stack Overflow',boxblur=lr=10:cr=10:ar=10[out]" -pix_fmt rgba -map '[out]' output.png
