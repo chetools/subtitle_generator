@@ -14,10 +14,27 @@ import shutil
 
 
 
-text = """after the questionable
-events of the last part
-where Spadeless lost
-his pets"""
+text = """after the events of
+the last part where
+i found a tunnel
+leading me to my
+enemy's base and
+leaked my coordinates
+on the public smp since
+they are always shown
+on stream...
+my enemies came over
+prepared for an
+all out war...
+being a freshman
+in high school i did
+what any 9th grader
+would do
+work extremely hard
+and try to succeed
+yeah about that...
+full story coming soon
+server ip in Discord"""
 text = re.sub(r"[,.!?-] ", " ", text, 0, re.MULTILINE)
 text = text.lower()
 text = text.split()
@@ -250,6 +267,6 @@ def set_timeline():
     f.write(etree.tostring(tree, pretty_print=True))
     f.close()
 
-to_text("E:\\Blender\\audio.mov")
+to_text("audio.mov")
 align()    
 set_timeline()
